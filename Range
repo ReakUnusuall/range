@@ -2,8 +2,8 @@ import pygame
 
 pygame.init()
 screen = pygame.display.set_mode((1200, 900))
-Miku = pygame.image.load('miku')
-Bullet = pygame.image.load('bullet')
+Miku = pygame.image.load('miku.jpg')
+Bullet = pygame.image.load('bullet.jpg')
 x = 200
 y = 200
 screen.fill(121, 79, 101)
