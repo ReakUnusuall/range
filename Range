@@ -2,16 +2,42 @@ import pygame
 
 pygame.init()
 screen = pygame.display.set_mode((1200, 900))
-Miku = pygame.image.load('miku.jpg')
-Bullet = pygame.image.load('bullet.jpg')
+swat = pygame.image.load('swat.png')
+clock = pygame.time.Clock()
+
 x = 200
 y = 200
+
 screen.fill(121, 79, 101)
 
-for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
+class ball():
+    def __init__(self, x, y, size, color, diagonal):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color = color
+        self.diagonal = diagonal
+        self.speed = 9 * diagonal
 
-screen.blit(miku,(x, y))
+    def bullet1(self, win):
+        pygame.draw.circle(win, self.color, (self.x, self.y), self.size)
+
+run = True
+bullets = []
+while run:
+    clock.tick(60)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    for bullet in bullets:
+        #видимость снаряда
+        if bullet.x < 500 and bullet.x > 0:
+            bullet.x += bullet.speed
+        else:
+            #удаление снаряда, ушедшего из поля зрения
+            bullet.pop(bullets.index(bullet))
+
+screen.blit(swat,(x, y))
 pygame.display.update()
