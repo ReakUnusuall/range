@@ -1,8 +1,8 @@
 import pygame
 import random
 
-Width = 900
-Height = 800
+Width = 400
+Height = 500
 
 Y = (255, 255, 0)
 G = (67, 130, 67)
@@ -10,11 +10,10 @@ R = (222, 100, 60)
 B = (10, 10, 10)
 
 pygame.init()
-pygame.mixer.init()
 screen = pygame.display.set_mode((Width, Height))
 pygame.display.set_caption("Тир")
 clock = pygame.time.Clock()
-
+   
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -88,8 +87,8 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE :
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
                 player.shoot()
 
     sprite.update()
