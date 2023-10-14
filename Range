@@ -98,9 +98,8 @@ while run:
         e = Enemy()
         sprite.add(e)
         enemy.add(e)
-    hits = pygame.sprite.spritecollide(player, enemy, False)
     if hits:
-        run = False
+        run = True
 
     screen.fill(B)
     sprite.draw(screen)
