@@ -21,8 +21,8 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.Surface((50, 40))
         self.image.fill(G)
         self.rect = self.image.get_rect()
-        self.rect.centerx = Width / 2
-        self.rect.bottom = Height - 10
+        self.rect.centerx = Width // 2
+        self.rect.bottom = Height - 30
         self.speedx = 0
 
     def update(self):
@@ -35,10 +35,10 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top)
-        all_sprites.add(bullet)
+        sprite.add(bullet)
         bullets.add(bullet)
 
-class Mob(pygame.sprite.Sprite):
+class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((30, 40))
@@ -46,8 +46,8 @@ class Mob(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(Width - self.rect.width)
         self.rect.y = random.randrange(-100, -40)
-        self.speedy = random.randrange(1, 8)
-        self.speedx = random.randrange(-3, 3)
+        self.speedy = random.randrange(1, 9)
+        self.speedx = random.randrange(-2, 4)
 
     def update(self):
         self.rect.x += self.speedx
@@ -67,22 +67,20 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.centerx = x
         self.speedy = -10
 
-
     def update(self): 
         self.rect.y += self.speedy
-
         if self.rect.bottom < 0:
             self.kill()
 
-all_sprites = pygame.sprite.Group()
-mobs = pygame.sprite.Group()
+sprite = pygame.sprite.Group()
+enemy = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 player = Player()
-all_sprites.add(player)
+sprite.add(player)
 for i in range(8):
-    m = Mob()
-    all_sprites.add(m)
-    mobs.add(m)
+    e = Enemy()
+    sprite.add(e)
+    enemy.add(e)
 
 run = True
 while run:
@@ -94,19 +92,19 @@ while run:
             if event.key == pygame.K_SPACE :
                 player.shoot()
 
-    all_sprites.update()
+    sprite.update()
 
-    hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
+    hits = pygame.sprite.groupcollide(enemy, bullets, True, True)
     for hit in hits:
-        m = Mob()
-        all_sprites.add(m)
-        mobs.add(m)
-    hits = pygame.sprite.spritecollide(player, mobs, False)
+        e = Enemy()
+        sprite.add(e)
+        enemy.add(e)
+    hits = pygame.sprite.spritecollide(player, enemy, False)
     if hits:
         run = False
 
     screen.fill(B)
-    all_sprites.draw(screen)
+    sprite.draw(screen)
     pygame.display.flip()
 
-pygame.quit()  
+pygame.quit()
